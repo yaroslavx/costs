@@ -7,17 +7,18 @@ import {
 import { AuthService } from 'src/auth/auth.service';
 
 @Injectable()
-export class RegistrationGuard implements CanActivate {
+export class LoginGuard implements CanActivate {
   constructor(private authService: AuthService) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
-    const { username } = request.body;
+    const { username, password } = request.body;
     const user = await this.authService.validateUser(username);
 
-    if (user) {
-      throw new UnauthorizedException(
-        `User with username:${username} already exists`,
-      );
+    if (!user) {
+      throw new UnauthorizedException(`Invalid credentials`);
+    }
+    if (user.password !== password) {
+      throw new UnauthorizedException(`Invalid credentials`);
     }
     return true;
   }
