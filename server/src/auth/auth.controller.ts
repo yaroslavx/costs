@@ -11,17 +11,27 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { Response } from 'express';
 import { RegistrationGuard } from './guards/registration.guard';
 import { LoginGuard } from 'src/auth/guards/login.guard';
+import { AuthService } from 'src/auth/auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private authService: AuthService,
+  ) {}
 
   @UseGuards(LoginGuard)
   @Post('login')
   async loginUser(@Body() loginUserDto: CreateUserDto, @Res() res: Response) {
     const user = await this.userService.login(loginUserDto);
+    const accessToken = this.authService.generateAccessToken(user);
+    const refreshToken = this.authService.generateRefreshToken(user._id);
     res.statusCode = HttpStatus.OK;
-    return res.send({ username: user.username });
+    return res.send({
+      ...accessToken,
+      ...refreshToken,
+      username: user.username,
+    });
   }
 
   @UseGuards(RegistrationGuard)
