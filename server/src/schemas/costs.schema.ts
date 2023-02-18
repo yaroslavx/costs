@@ -11,11 +11,11 @@ export class Cost {
   @Prop({ required: true })
   price: number;
 
-  @Prop({ required: true, defeult: new Date() })
+  @Prop({ required: true, default: new Date() })
   date: Date;
 
-  @Prop({ required: true, defeult: '1' })
-  userId: ObjectId;
+  @Prop({ required: true, default: '1' })
+  userId: string;
 }
 
 export const CostsSchema = SchemaFactory.createForClass(Cost);

@@ -10,7 +10,8 @@ export class User {
 
   @Prop({ required: true })
   password: string;
-  _id: ObjectId | string;
+
+  _id: ObjectId;
 }
 
 export const UsersSchema = SchemaFactory.createForClass(User);

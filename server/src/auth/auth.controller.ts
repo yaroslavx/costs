@@ -24,8 +24,8 @@ export class AuthController {
   @Post('login')
   async loginUser(@Body() loginUserDto: CreateUserDto, @Res() res: Response) {
     const user = await this.userService.login(loginUserDto);
-    const accessToken = this.authService.generateAccessToken(user);
-    const refreshToken = this.authService.generateRefreshToken(user._id);
+    const accessToken = await this.authService.generateAccessToken(user);
+    const refreshToken = await this.authService.generateRefreshToken(user._id);
     res.statusCode = HttpStatus.OK;
     return res.send({
       ...accessToken,

@@ -6,7 +6,7 @@ import { CreateCostsDto } from 'src/costs/dto/create-costs.dto';
 import { UpdateCostsDto } from 'src/costs/dto/update-costs.dto';
 
 @Injectable()
-export class CostsServie {
+export class CostsService {
   constructor(
     @InjectModel(Cost.name) private costsModel: Model<CostsDocument>,
   ) {}
