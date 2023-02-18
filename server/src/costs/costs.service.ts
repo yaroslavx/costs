@@ -39,6 +39,6 @@ export class CostsService {
   }
 
   async delete(id: string): Promise<void> {
-    this.costsModel.deleteOne({ _id: id });
+    await this.costsModel.deleteOne({ _id: id });
   }
 }

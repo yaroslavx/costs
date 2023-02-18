@@ -1,9 +1,12 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
+  Param,
+  Patch,
   Post,
   Req,
   Res,
@@ -13,6 +16,7 @@ import { CostsService } from 'src/costs/costs.service';
 import { AuthService } from 'src/auth/auth.service';
 import { JWTGuard } from 'src/auth/guards/jwt.guard';
 import { CreateCostsDto } from 'src/costs/dto/create-costs.dto';
+import { UpdateCostsDto } from 'src/costs/dto/update-costs.dto';
 
 @Controller('costs')
 export class CostsController {
@@ -45,5 +49,22 @@ export class CostsController {
       ...createCostDto,
       userId: user._id,
     });
+  }
+
+  @UseGuards(JWTGuard)
+  @Patch(':id')
+  @HttpCode(HttpStatus.OK)
+  async updateCost(
+    @Body() updateCostDto: UpdateCostsDto,
+    @Param('id') id: string,
+  ) {
+    return await this.costsService.update(updateCostDto, id);
+  }
+
+  @UseGuards(JWTGuard)
+  @Delete(':id')
+  @HttpCode(HttpStatus.OK)
+  async deleteCost(@Param('id') id: string) {
+    return await this.costsService.delete(id);
   }
 }
