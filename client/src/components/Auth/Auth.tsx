@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "components/Auth/styles.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { $auth } from "context/auth";
+import { useStore } from "effector-react";
 
 type Props = {
   type: "signin" | "signup";
@@ -8,6 +10,13 @@ type Props = {
 
 export const Auth = ({ type }: Props) => {
   const title = type === "signin" ? "Sign In" : "Sign Up";
+  const navigate = useNavigate();
+  const isLoggedIn = useStore($auth);
+
+  if (isLoggedIn) {
+    navigate("/");
+  }
+
   return (
     <div className="container">
       <h1>{title}</h1>
