@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { FormEvent, MutableRefObject, useRef, useState } from "react";
 import "components/Auth/styles.css";
 import { Link, useNavigate } from "react-router-dom";
 import { $auth } from "context/auth";
 import { useStore } from "effector-react";
+import { AuthApi } from "api/authApi";
 
 type Props = {
   type: "signin" | "signup";
@@ -10,6 +11,8 @@ type Props = {
 
 export const Auth = ({ type }: Props) => {
   const title = type === "signin" ? "Sign In" : "Sign Up";
+  const usernameRef = useRef() as MutableRefObject<HTMLInputElement>;
+  const passwordRef = useRef() as MutableRefObject<HTMLInputElement>;
   const navigate = useNavigate();
   const isLoggedIn = useStore($auth);
 
@@ -17,17 +20,42 @@ export const Auth = ({ type }: Props) => {
     navigate("/");
   }
 
+  const handleLogin = async (username: string, password: string) => {
+    if (!username || !password) return;
+    const isSuccess = await AuthApi.login(username, password);
+    if (!isSuccess) return;
+    navigate("/");
+  };
+
+  const handleRegistration = async (username: string, password: string) => {
+    if (!username || !password) return;
+    if (password.length < 8) return;
+    const isSuccess = await AuthApi.register(username, password);
+    if (!isSuccess) return;
+    navigate("/login");
+  };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    type === "signin"
+      ? handleLogin(usernameRef.current.value, passwordRef.current.value)
+      : handleRegistration(
+          usernameRef.current.value,
+          passwordRef.current.value
+        );
+  };
+
   return (
     <div className="container">
       <h1>{title}</h1>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label className="auth-label">
-          Enter your username and password
-          <input type="text" className="form-control" />
+          Enter your username
+          <input ref={usernameRef} type="text" className="form-control" />
         </label>
         <label className="auth-label">
-          Enter your username and password
-          <input type="text" className="form-control" />
+          Enter your password
+          <input ref={passwordRef} type="text" className="form-control" />
         </label>
         <button className="btn btn-primary auth-btn">{title}</button>
       </form>
