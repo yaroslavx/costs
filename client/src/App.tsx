@@ -1,11 +1,14 @@
 import { Header } from "components/Header";
+import { Auth } from "components/Auth/Auth";
+import { Outlet } from "react-router-dom";
 
-const App = () => {
+export const App = () => {
   return (
     <div className="app">
-        <Header />
+      <Header />
+      <Outlet />
     </div>
-  )
-}
+  );
+};
 
-export default App
+// <Auth type="signin" />
