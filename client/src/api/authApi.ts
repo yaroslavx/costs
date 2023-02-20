@@ -1,5 +1,5 @@
 import { instance } from "api/rootApi";
-import { setAuth } from "context/auth";
+import { setAuth, setUsername } from "context/auth";
 
 export class AuthApi {
   static async login(username: string, password: string): Promise<boolean> {
@@ -8,6 +8,7 @@ export class AuthApi {
       console.log(res);
       if (res.status === 200) {
         setAuth(true);
+        setUsername(res.data.username);
         localStorage.setItem("auth", JSON.stringify(res.data));
         return true;
       }

@@ -32,7 +32,7 @@ export const Auth = ({ type }: Props) => {
     if (password.length < 8) return;
     const isSuccess = await AuthApi.register(username, password);
     if (!isSuccess) return;
-    navigate("/login");
+    navigate("/signin");
   };
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -63,14 +63,14 @@ export const Auth = ({ type }: Props) => {
         <div>
           <span>
             Dont't have an account?
-            <Link to="/signup">Signup</Link>
+            <Link to="/signup"> Signup</Link>
           </span>
         </div>
       ) : (
         <div>
           <span>
             Already have an account?
-            <Link to="/signin">Signin</Link>
+            <Link to="/signin"> Signin</Link>
           </span>
         </div>
       )}
