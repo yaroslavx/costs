@@ -3,8 +3,8 @@ import { CostsBuilder } from "components/Costs/CostsBuilder";
 export const Costs = () => {
   return (
     <div>
-      <h1>Costs</h1>
-      <CostsBuilder />
+      <h1 style={{ textAlign: "center" }}>Costs</h1>
+      <CostsBuilder costs={[]} />
     </div>
   );
 };
