@@ -1,7 +1,7 @@
 import { RouteObject, useRoutes } from "react-router-dom";
 import { App } from "App";
 import { Auth } from "components/Auth/Auth";
-import { Main } from "components/Main";
+import { Costs } from "components/Costs";
 import { AccountStatusValidator } from "HOCs/AccountStatusValidator";
 
 export const AppRouter = () => {
@@ -12,7 +12,7 @@ export const AppRouter = () => {
       children: [
         {
           index: true,
-          element: <AccountStatusValidator protectedPage={<Main />} />,
+          element: <AccountStatusValidator protectedPage={<Costs />} />,
         },
         { path: "signin", element: <Auth type="signin" /> },
         { path: "signup", element: <Auth type="signup" /> },

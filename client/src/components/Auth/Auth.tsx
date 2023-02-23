@@ -55,7 +55,7 @@ export const Auth = ({ type }: Props) => {
         </label>
         <label className="auth-label">
           Enter your password
-          <input ref={passwordRef} type="text" className="form-control" />
+          <input ref={passwordRef} type="password" className="form-control" />
         </label>
         <button className="btn btn-primary auth-btn">{title}</button>
       </form>
