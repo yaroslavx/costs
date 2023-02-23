@@ -13,6 +13,7 @@ export const $costs = costs
   .createStore<ICost[]>([])
   .on(createCost, (state, payload) => [...state, payload])
   .on(setCosts, (_, payload) => payload);
+
 export const $totalCosts = costs
   .createStore<number>(0)
-  .on(setTotalCosts, (state, payload) => (state += payload));
+  .on(setTotalCosts, (_, payload) => payload);

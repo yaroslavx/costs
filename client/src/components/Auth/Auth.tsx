@@ -1,7 +1,13 @@
-import React, { FormEvent, MutableRefObject, useRef, useState } from "react";
+import React, {
+  FormEvent,
+  MutableRefObject,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from "react";
 import "components/Auth/styles.css";
 import { Link, useNavigate } from "react-router-dom";
-import { $auth } from "context/auth";
+import { $auth, setAuth } from "context/auth";
 import { useStore } from "effector-react";
 import { AuthApi } from "api/authApi";
 
@@ -16,9 +22,11 @@ export const Auth = ({ type }: Props) => {
   const navigate = useNavigate();
   const isLoggedIn = useStore($auth);
 
-  if (isLoggedIn) {
-    navigate("/");
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/");
+    }
+  }, []);
 
   const handleLogin = async (username: string, password: string) => {
     if (!username || !password) return;

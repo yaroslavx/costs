@@ -1,6 +1,8 @@
 import { Header } from "components/Header";
-import { Auth } from "components/Auth/Auth";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { getAuthDataFromLs, removeUser } from "utils/authUtils";
+import { setAuth, setUsername } from "context/auth";
 
 export const App = () => {
   return (
@@ -10,5 +12,3 @@ export const App = () => {
     </div>
   );
 };
-
-// <Auth type="signin" />

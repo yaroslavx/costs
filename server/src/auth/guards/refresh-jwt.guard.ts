@@ -4,7 +4,6 @@ import {
   ExecutionContext,
   UnauthorizedException,
 } from '@nestjs/common';
-import { AuthService } from 'src/auth/auth.service';
 import { UserService } from 'src/users/users.service';
 
 @Injectable()
